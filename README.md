@@ -129,11 +129,12 @@ module eks {
 ## Output Variables
 
 ## Author
-For any complains, please feel free to hit the following moron ¯\\\_(ツ)\_/¯
+For any complains, please feel free to hit the following moron
 
-* [Tan Nguyen t.nguyen@elsevier.com](mailto:t.nguyen@elsevier.com)
+* [Tan Nguyen t.nguyen@elsevier.com](mailto:t.nguyen@elsevier.com) (another
+    address [tan.mng90@gmail.com](mailto:tan.mng90@gmail.com))
 
-If the module is too bad, you can always fork it and make it better as well
+If the module is too bad, you can always fork it and make it better as well ¯\\\_(ツ)\_/¯
 
 ## Todo
 
