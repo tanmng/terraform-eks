@@ -2,6 +2,14 @@
 
 A module to set up EKS with Terraform >:)
 
+## Note on AWS provider
+
+[Terraform AWS
+provider](https://github.com/terraform-providers/terraform-provider-aws) started
+supporting Amazon EKS from June 5 2018 on release `1.22.0` ([related ChangeLog](https://github.com/terraform-providers/terraform-provider-aws/blob/master/CHANGELOG.md#1220-june-05-2018), so we include
+a requirement for this in `terraform.tf`. Please make sure you upgrade to this
+version or later of the provider.
+
 ## Note on Network availability
 
 Since right now (June 6th 2018), EKS does not support `us-east-1a`, please make
