@@ -11,13 +11,27 @@ variable eks_subnets {
 }
 
 #------------------------------------------------------------------------------
-# Tagging variables
+# General variable
 #------------------------------------------------------------------------------
-variable eks_tag_environment {
-  description = "Environment tag of the EKS deployment"
+variable global_vpc_id {
+  description = "ID of the VPC in which we want to set up EKS"
   type        = "string"
 }
 
+variable eks_ec2_key {
+  description = "Name of the EC2 keypair that we wish to set onto our instances"
+  type        = "string"
+}
+
+variable eks_ec2_ami {
+  description = "AMI of the image that we wish to use to run our EKS instances"
+  type        = "string"
+  default     = ""
+}
+
+#------------------------------------------------------------------------------
+# Tagging variables
+#------------------------------------------------------------------------------
 variable eks_tag_product {
   description = "Assigned in design phase. Is likely to span multiple AWS accounts."
   type        = "string"
@@ -60,12 +74,6 @@ variable eks_tag_description {
   default     = "eks"
 }
 
-variable eks_additional_asg_tags {
-  description = "A list of maps that contain custom tags to add to the eks ASG and possibly the instances."
-  type        = "list"
-  default     = []
-}
-
 #------------------------------------------------------------------------------
 # Security Group related
 #------------------------------------------------------------------------------
@@ -83,4 +91,41 @@ variable eks_cp_to_wn_to_port {
 variable eks_allow_worker_node_all_egress {
   description = "Specify whether you wish to allow worker node egress everwhere on all ports"
   default     = true
+}
+
+variable eks_workernode_additional_sgs {
+  description = "List of additional security that you wish to set onto our worker node instaces, might try Bastion source"
+  default     = []
+}
+
+#------------------------------------------------------------------------------
+# Autoscaling related
+#------------------------------------------------------------------------------
+variable eks_workernode_asg_min {
+  description = "Min size of the ASG running worker node for EKS cluster"
+  default     = 1
+}
+
+variable eks_workernode_asg_max {
+  description = "Max size of the ASG running worker node for EKS cluster"
+  default     = 2
+}
+
+variable eks_workernode_asg_desired_size {
+  description = "Desired size of the ASG running worker nodes for our EKS cluster"
+  default     = 2
+}
+
+variable eks_instance_type {
+  default = "m5.large"
+}
+
+variable eks_ami_mapping {
+  description = "Mapping from region to the EKS optimized AMI, you can update this but it is probably OK to use the one in here"
+  type        = "map"
+
+  default = {
+    us-east-1 = "ami-dea4d5a1"
+    us-west-2 = "ami-73a6e20b"
+  }
 }

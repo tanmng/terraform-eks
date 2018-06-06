@@ -9,15 +9,14 @@ resource aws_security_group control_plane {
   description = "Security group for EC2 instances running the control plane in our EKS cluster ${var.eks_cluster_name}"
   vpc_id      = "${var.global_vpc_id}"
 
-  tags = "${merge(map("Name",          "${join(".",list(var.eks_tag_product, var.eks_tag_environment, "control_plane"))}",
-                      "Product",       "${var.eks_tag_product}",
-                      "SubProduct",    "${var.eks_tag_sub_product}",
-                      "Contact",       "${var.eks_tag_contact}",
-                      "CostCode",      "${var.eks_tag_cost_code}",
-                      "Environment",   "${var.eks_tag_environment}",
-                      "Description",   "security_group_eks_elb",
-                      "Orchestration", "${var.eks_tag_orchestration}"),
-                  var.eks_additional_elb_tags)}"
+  tags = "${map("Name",          "${join(".",list(var.eks_tag_product, var.eks_tag_environment, "control_plane"))}",
+                "Product",       "${var.eks_tag_product}",
+                "SubProduct",    "${var.eks_tag_sub_product}",
+                "Contact",       "${var.eks_tag_contact}",
+                "CostCode",      "${var.eks_tag_cost_code}",
+                "Environment",   "${var.eks_tag_environment}",
+                "Description",   "security_group_eks_elb",
+                "Orchestration", "${var.eks_tag_orchestration}")}"
 }
 
 resource aws_security_group_rule allow_ingress_from_worker_node {
@@ -44,15 +43,14 @@ resource aws_security_group worker_node {
   description = "Security group for EC2 instances running the worker node in our EKS cluster ${var.eks_cluster_name}"
   vpc_id      = "${var.global_vpc_id}"
 
-  tags = "${merge(map("Name",          "${join(".",list(var.eks_tag_product, var.eks_tag_environment, "worker_node"))}",
-                      "Product",       "${var.eks_tag_product}",
-                      "SubProduct",    "${var.eks_tag_sub_product}",
-                      "Contact",       "${var.eks_tag_contact}",
-                      "CostCode",      "${var.eks_tag_cost_code}",
-                      "Environment",   "${var.eks_tag_environment}",
-                      "Description",   "Security group for EC2 instances running the worker node in our EKS cluster ${var.eks_cluster_name}",
-                      "Orchestration", "${var.eks_tag_orchestration}"),
-                  var.eks_additional_elb_tags)}"
+  tags = "${map("Name",          "${join(".",list(var.eks_tag_product, var.eks_tag_environment, "worker_node"))}",
+                "Product",       "${var.eks_tag_product}",
+                "SubProduct",    "${var.eks_tag_sub_product}",
+                "Contact",       "${var.eks_tag_contact}",
+                "CostCode",      "${var.eks_tag_cost_code}",
+                "Environment",   "${var.eks_tag_environment}",
+                "Description",   "Security group for EC2 instances running the worker node in our EKS cluster ${var.eks_cluster_name}",
+                "Orchestration", "${var.eks_tag_orchestration}")}"
 }
 
 resource aws_security_group_rule worker_node_egress_self {
