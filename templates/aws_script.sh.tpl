@@ -27,4 +27,4 @@ sed -i s,CLIENT_CA_FILE,$CA_CERTIFICATE_FILE_PATH,g  /etc/systemd/system/kubelet
 
 # Actually start the service to register our instances
 systemctl daemon-reload
-systemctl restart kubelet kube-proxy
+systemctl restart kubelet
