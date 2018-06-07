@@ -14,7 +14,7 @@ data template_file aws_auth_yaml {
   template = "${file("${path.module}/templates/aws-auth-cm.yaml.tpl")}"
 
   vars {
-    role_arn = "${aws_iam_role.eks.arn}"
+    role_arn = "${aws_iam_role.worker_node.arn}"
   }
 }
 
@@ -22,8 +22,11 @@ data template_file aws_script {
   template = "${file("${path.module}/templates/aws_script.sh.tpl")}"
 
   vars {
-    region       = "${data.aws_region.current.name}"
-    cluster_name = "${var.eks_cluster_name}"
+    max_pod_count       = "${lookup(local.max_pod_per_node, var.eks_instance_type)}"
+    region              = "${data.aws_region.current.name}"
+    cluster_name        = "${var.eks_cluster_name}"
+    endpoint            = "${aws_eks_cluster.main.endpoint}"
+    cluster_auth_base64 = "${aws_eks_cluster.main.certificate_authority.0.data}"
   }
 }
 
@@ -48,9 +51,12 @@ preferences: {}
 users:
 - name: aws
   user:
-    auth-provider:
-      config:
-        cluster-id: ${var.eks_cluster_name}
-      name: aws
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      command: heptio-authenticator-aws
+      args:
+        - "token"
+        - "-i"
+        - "${var.eks_cluster_name}"
 KUBECONFIG
 }

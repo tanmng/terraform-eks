@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------
 resource aws_eks_cluster main {
   name     = "${var.eks_cluster_name}"
-  role_arn = "${aws_iam_role.eks.arn}"
+  role_arn = "${aws_iam_role.control_plane.arn}"
 
   vpc_config {
     subnet_ids         = ["${var.eks_subnets}"]
@@ -11,7 +11,6 @@ resource aws_eks_cluster main {
   }
 
   depends_on = [
-    "aws_iam_role_policy_attachment.eksAmazonEKSClusterPolicy",
-    "aws_iam_role_policy_attachment.eksAmazonEKSServicePolicy",
+    "aws_iam_role_policy_attachment.control_plane_policies",
   ]
 }

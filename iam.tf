@@ -1,8 +1,8 @@
 #------------------------------------------------------------------------------
 # IAM role for EKS control plane. We allow this from Amazon own's AWS account
 #------------------------------------------------------------------------------
-resource aws_iam_role eks {
-  name        = "EKS-${var.eks_cluster_name}-${var.eks_tag_environment}-${data.aws_region.current.name}"
+resource aws_iam_role control_plane {
+  name        = "EKS-Control-Plane-${var.eks_cluster_name}-${var.eks_tag_environment}-${data.aws_region.current.name}"
   description = "An IAM role to grant EKS access to our Account and perform its magic with our cluster ${var.eks_cluster_name} in ${var.global_vpc_id}"
 
   assume_role_policy = <<POLICY
@@ -21,14 +21,18 @@ resource aws_iam_role eks {
 POLICY
 }
 
-resource aws_iam_role_policy_attachment eksAmazonEKSClusterPolicy {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = "${aws_iam_role.eks.name}"
+locals {
+  # List of managed policies that we should assign to the IAM role of Worker node
+  control_plane_managed_policies = [
+    "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+    "arn:aws:iam::aws:policy/AmazonEKSServicePolicy",
+  ]
 }
 
-resource aws_iam_role_policy_attachment eksAmazonEKSServicePolicy {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = "${aws_iam_role.eks.name}"
+resource aws_iam_role_policy_attachment control_plane_policies {
+  count      = "${length(local.control_plane_managed_policies)}"
+  policy_arn = "${element(local.control_plane_managed_policies, count.index)}"
+  role       = "${aws_iam_role.control_plane.name}"
 }
 
 #------------------------------------------------------------------------------

@@ -10,6 +10,14 @@ supporting Amazon EKS from June 5 2018 on release `1.22.0` ([related ChangeLog](
 a requirement for this in `terraform.tf`. Please make sure you upgrade to this
 version or later of the provider.
 
+## Note on Instance type
+
+According to the [values provided by
+AWS](https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/amazon-eks-nodegroup.yaml), we 
+will have to set the max number of pods that we can run on a node. This is done
+by using the mapping stored in `local.max_pod_per_node`. This added the benefit
+of forcing any user to set the instance to the allowed values.
+
 ## Note on Network availability
 
 Since right now (June 6th 2018), EKS does not support `us-east-1a`, please make

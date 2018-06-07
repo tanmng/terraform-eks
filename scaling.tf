@@ -15,15 +15,20 @@ resource aws_autoscaling_group eks_asg {
       map("key", "Name",
           "value", "eks-worker-cluster-${var.eks_cluster_name}-${var.eks_tag_environment}",
           "propagate_at_launch", true),
-      map("key", "Product",        "value", "${var.eks_tag_product}",            "propagate_at_launch", true),
-      map("key", "SubProduct",     "value", "${var.eks_tag_sub_product}",        "propagate_at_launch", true),
-      map("key", "Contact",        "value", "${var.eks_tag_contact}",            "propagate_at_launch", true),
-      map("key", "CostCode",       "value", "${var.eks_tag_cost_code}",          "propagate_at_launch", true),
-      map("key", "Environment",    "value", "${var.eks_tag_environment}",        "propagate_at_launch", true),
-      map("key", "Description",    "value", "${var.eks_tag_description}",        "propagate_at_launch", true),
-      map("key", "Orchestration",  "value", "${var.eks_tag_orchestration}",      "propagate_at_launch", true),
-      map("key", "EKSCluster",     "value", "${var.eks_cluster_name}",           "propagate_at_launch", true),
-      map("key", "cpm backup",     "value", "${var.eks_tag_cpm_backup}",         "propagate_at_launch", true)
+      map("key", "Product",           "value", "${var.eks_tag_product}",       "propagate_at_launch", true),
+      map("key", "SubProduct",        "value", "${var.eks_tag_sub_product}",   "propagate_at_launch", true),
+      map("key", "Contact",           "value", "${var.eks_tag_contact}",       "propagate_at_launch", true),
+      map("key", "CostCode",          "value", "${var.eks_tag_cost_code}",     "propagate_at_launch", true),
+      map("key", "Environment",       "value", "${var.eks_tag_environment}",   "propagate_at_launch", true),
+      map("key", "Description",       "value", "${var.eks_tag_description}",   "propagate_at_launch", true),
+      map("key", "Orchestration",     "value", "${var.eks_tag_orchestration}", "propagate_at_launch", true),
+      map("key", "EKSCluster",        "value", "${var.eks_cluster_name}",      "propagate_at_launch", true),
+      map("key", "KubernetesCluster", "value", "${var.eks_cluster_name}",      "propagate_at_launch", true),
+      map(
+        "key", "kubernetes.io/cluster/${var.eks_cluster_name}'",
+        "value", "owned",
+        "propagate_at_launch", true),
+      map("key", "cpm backup",        "value", "${var.eks_tag_cpm_backup}",    "propagate_at_launch", true)
     )
   }"]
 }
