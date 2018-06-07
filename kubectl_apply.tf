@@ -18,6 +18,6 @@ resource null_resource terraform_apply {
 
   provisioner local-exec {
     # Bootstrap script called with private_ip of each node in the clutser
-    command = "kubectl apply --kubeconfig=${local_file.kubectl_config.filename} -f ${local_file.aws_auth.filename}"
+    command = "kubectl apply --kubeconfig=${local_file.kubectl_config.filename} -f ${local_file.aws_auth.filename} --overwrite=false"
   }
 }
