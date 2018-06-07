@@ -58,7 +58,7 @@ resource aws_security_group_rule worker_node_egress_self {
   from_port         = 0
   to_port           = 0
   protocol          = -1
-  security_group_id = "${aws_security_group.control_plane.id}"
+  security_group_id = "${aws_security_group.worker_node.id}"
   self              = true
   description       = "Inter-worker node traffic"
 }
@@ -68,13 +68,13 @@ resource aws_security_group_rule worker_node_ingress_self {
   from_port         = 0
   to_port           = 0
   protocol          = -1
-  security_group_id = "${aws_security_group.control_plane.id}"
+  security_group_id = "${aws_security_group.worker_node.id}"
   self              = true
   description       = "Inter-worker node traffic"
 }
 
 resource aws_security_group_rule allow_ingress_from_control_plane {
-  type                     = "egress"
+  type                     = "ingress"
   from_port                = "${var.eks_cp_to_wn_from_port}"
   to_port                  = "${var.eks_cp_to_wn_to_port}"
   description              = "Allow connection from control plane according to AWS recommendation"
