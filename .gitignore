@@ -1,0 +1,3 @@
+# All the temp files that we create
+kubectl_config
+aws-auth.yaml

@@ -129,3 +129,11 @@ variable eks_ami_mapping {
     us-west-2 = "ami-73a6e20b"
   }
 }
+
+#------------------------------------------------------------------------------
+# Whether we wish to use local workstation to grant the instance to join our cluster
+#------------------------------------------------------------------------------
+variable eks_grant_from_ws {
+  description = "Whether we wish to use local workstation to grant the instance to join our cluster"
+  default     = false
+}
