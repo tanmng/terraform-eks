@@ -25,7 +25,7 @@ resource aws_autoscaling_group eks_asg {
       map("key", "EKSCluster",        "value", "${var.eks_cluster_name}",      "propagate_at_launch", true),
       map("key", "KubernetesCluster", "value", "${var.eks_cluster_name}",      "propagate_at_launch", true),
       map(
-        "key", "kubernetes.io/cluster/${var.eks_cluster_name}'",
+        "key", "kubernetes.io/cluster/${var.eks_cluster_name}",
         "value", "owned",
         "propagate_at_launch", true),
       map("key", "cpm backup",        "value", "${var.eks_tag_cpm_backup}",    "propagate_at_launch", true)
