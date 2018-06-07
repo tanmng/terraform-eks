@@ -136,13 +136,41 @@ module eks {
 }
 ```
 
-## Input Variables
+## Variables
 
-### Required Variables
+### Required variables
 
-### Optional Variables
+* `eks_cluster_name` - Name to set to the EKS cluster
+* `eks_ec2_key` - Name of the EC2 keypair that we wish to set onto our instances
+* `eks_subnets` - List of subnets in which we will run our EKS worker node
+* `eks_tag_contact` - Specifies the group email address of the team responsible for the support of this resource.
+* `eks_tag_cost_code` - Track costs to align with various costing sources: cost centre, project code, PnL budget.
+* `eks_tag_environment` - Environment consists of 2 segments, separated by a dash. First segment: environment category (prod, dev or test). Second segment: Free form name to further describe the function of the environment.
+* `eks_tag_orchestration` - Path to Git for control repository.
+* `eks_tag_product` - Assigned in design phase. Is likely to span multiple AWS accounts.
+* `eks_tag_sub_product` - Assigned in design phase. Used where an AWS account runs more than one service.
+* `global_vpc_id` - ID of the VPC in which we want to set up EKS
+
+### Optional variables
+
+* `eks_allow_worker_node_all_egress` - Specify whether you wish to allow worker node egress everwhere on all ports, default to `True`
+* `eks_ami_mapping` - Mapping from region to the EKS optimized AMI, you can update this but it is probably OK to use the one in here, default to `{u'us-west-2': u'ami-73a6e20b', u'us-east-1': u'ami-dea4d5a1'}`
+* `eks_cp_to_wn_from_port` - The From port for the rules connecting our control plane to worker node, default to `1024`
+* `eks_cp_to_wn_to_port` - The to port for the rules connecting our control plane to worker node, default to `65535`
+* `eks_ec2_ami` - AMI of the image that we wish to use to run our EKS instances, default to ``
+* `eks_grant_from_ws` - Whether we wish to use local workstation to grant the instance to join our cluster, default to `False`
+* `eks_instance_type` - , default to `m5.large`
+* `eks_tag_cpm_backup` - Cloud Protection Manager backup policy where CPM has been configured to scan resources in an account looking for this tag name., default to ``
+* `eks_tag_description` - A tag to describe what the resource is/does, such as the applications it runs., default to `eks`
+* `eks_workernode_additional_sgs` - List of additional security that you wish to set onto our worker node instaces, might try Bastion source, default to `[]`
+* `eks_workernode_asg_desired_size` - Desired size of the ASG running worker nodes for our EKS cluster, default to `2`
+* `eks_workernode_asg_max` - Max size of the ASG running worker node for EKS cluster, default to `2`
+* `eks_workernode_asg_min` - Min size of the ASG running worker node for EKS cluster, default to `1`
 
 ## Output Variables
+
+* `kubctl_conf_base64` - Base64 encoded content for kubectl config file, you can use it to connect to EKS
+* `worker_node_sg` - ID of the security group we created for our worker node, you can use it to filter out the instances that you need
 
 ## Author
 For any complains, please feel free to hit the following moron
